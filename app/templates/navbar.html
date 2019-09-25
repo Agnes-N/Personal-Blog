@@ -1,0 +1,37 @@
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark ">
+    <a class="navbar-brand" href="{{url_for('main.index')}}" style="color: black"><strong>Home</strong> </a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('main.new_pitch')}}" style="color: black"><strong>New Pitch</strong></a>
+
+                {% endif %}
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if current_user.is_authenticated %}
+
+            <li class="nav-item" style="margin-left:-10%">
+                <a href="{{url_for('main.profile',name=current_user.username)}}" style="color: black"><strong>Profile</strong></a></li>
+            <div class="logout" style="margin-left:2%">
+                <a href="{{url_for('auth.logout')}}" style="color: black"><strong>Log Out</strong></a>
+
+            </div>
+
+            </li>
+
+            {% else %}
+            <li class="nav-item">
+
+
+                <a class="nav-link" href="{{url_for('auth.login')}}" style='margin-right:30px'> <strong>Log In</strong></a>
+
+            </li>
+            <li class="nav-item">
+                <a href="{{url_for('auth.signup')}}" style="margin-right:30px " class="nav-link"><strong>Sign Up</strong></a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
