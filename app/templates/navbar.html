@@ -1,10 +1,19 @@
 <div class="container-fluid">
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" style="color:black">HOME</a>
-            </li>
-            <li class="nav-item">
-                <a class="flex-sm-fill text-sm-center nav-link" href="#" style="color:black">BLOG</a>
-            </li>
-        </ul>
-    </div>
+    <ul class="nav justify-content-center" style="margin-top:3%">
+        <li class="nav-item">
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" style="color:black">HOME</a>
+        </li>
+        <li class="nav-item">
+            <a class="flex-sm-fill text-sm-center nav-link" href="#" style="color:black">BLOG</a>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_authenticated %}
+        <li style="color:white;padding:15px;">{{current_user.username}}</li>
+        <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+        {% else %}
+        <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
+        {%endif%}
+    </ul>
+</div>
