@@ -16,14 +16,15 @@ class Writer(UserMixin,db.Model):
     email = db.Column(db.String(255), unique=True, index=True)
 
     pass_secure = db.Column(db.String(255))
-    # password_hash = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String(255))
+
+    blogs = db.relationship('Blog', backref='writer', lazy="dynamic")
 
     @property
     def password(self):
         raise AttributeError('you cannot read the password attribute')
-        
+
     @password.setter
     def password(self, password):
         self.pass_secure = generate_password_hash(password)
@@ -37,3 +38,20 @@ class Writer(UserMixin,db.Model):
 
     def __repr__(self):
         return f'Writer{self.username}'
+
+class Blog(db.Model):
+
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer,primary_key= True)
+    title =db.Column(db.String(255))
+    content = db.Column(db.String(500))
+    image = db.Column(db.String(500))
+
+    writer_id = db.Column(db.Integer, db.ForeignKey('writers.id'))
+   
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Blog {self.content}'
