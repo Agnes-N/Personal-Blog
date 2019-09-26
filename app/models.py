@@ -20,6 +20,10 @@ class Writer(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String(255))
 
+    @property
+    def password(self):
+        raise AttributeError('you cannot read the password attribute')
+        
     @password.setter
     def password(self, password):
         self.pass_secure = generate_password_hash(password)
