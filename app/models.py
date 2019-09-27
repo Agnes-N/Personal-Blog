@@ -43,7 +43,7 @@ class Blog(db.Model):
 
     __tablename__ = 'blogs'
     id = db.Column(db.Integer,primary_key= True)
-    title =db.Column(db.String(255))
+    title = db.Column(db.String(255))
     content = db.Column(db.String(500))
     image = db.Column(db.String(500))
 
@@ -55,3 +55,29 @@ class Blog(db.Model):
 
     def __repr__(self):
         return f'Blog {self.content}'
+
+class Article(db.Model):
+    __tablename__ = 'articles'
+    id = db.Column(db.Integer,primary_key= True)
+    article = db.Column(db.String(255))
+    category = db.Column(db.String(500))
+    writer_id = db.Column(db.Integer,db.ForeignKey('writers.id'))
+
+    def save_article(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod
+    def get_article(cls):
+        articles = Article.query.all()
+        return articles
+
+class Quotes:
+   '''
+   Quote class to define quote objects
+   '''
+
+   def __init__(self,author,quote):
+    #  self.id = id
+        self.author = author
+        self.quote = quote

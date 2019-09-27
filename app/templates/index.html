@@ -2,8 +2,29 @@
 {% import 'macros.html' as macro %}
 
 {% block content %}
-<div class="container" id="particles-js">
-        <!-- <h2 class="text-center" id="posts" style="color: black">PERSON BLOG</h2><br><br> -->
+<div class="example" style="background-color:#FFA07A; padding: 2%">
+        <h3 class="container card-text">The great thing about one focus for a blog is that you’re
+                likely passionate about it and that will give you an edge when it comes to keeping up with the blog.</h3>
+</div>
+
+<div class="container" id="particles-js" style="margin-top:3%">
+
+        <div class="row">
+                <div class="col-md-6">
+                        <blockquote class="text-center text-lg">
+                                <h3>WELCOME</h3>
+                                <p><i>{{ quotes.quote }}</i></p>
+                                <p>{{ quotes.author }}</p>
+
+                        </blockquote>
+                </div>
+
+                <div class="col-md-6">
+                        <img src="https://www.start-business-online.com/images/article_manager_uploads/blog.jpg" width="400"
+                                height="300">
+                                <h6 class="text" style="margin-left:6%"><small>Read to create a blog?<a href="{{url_for('auth.signup')}}"><strong>Sign Up</strong></small></h6>
+                </div>
+        </div>
 
         <ul class="nav nav-pills nav-justified nav-fill" role="tablist">
                 <li class="nav-item">

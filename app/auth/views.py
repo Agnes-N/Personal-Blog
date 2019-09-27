@@ -4,6 +4,7 @@ from ..models import Writer
 from .forms import LoginForm,RegistrationForm
 from .. import db
 from flask_login import login_user,logout_user,login_required
+from ..email import mail_message
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
@@ -25,13 +26,12 @@ def logout():
     logout_user()
     return redirect(url_for("main.index"))
 
-@auth.route('/register',methods = ["GET","POST"])
-def register():
-    form = RegistrationForm()
+@auth.route('/signup',methods=['GET','POST'])
+def signup():
+    form=RegistrationForm()
     if form.validate_on_submit():
-        writer = Writer(email = form.email.data, username = form.username.data,password = form.password.data)
-        db.session.add(writer)
-        db.session.commit()
+        writer=Writer(email=form.email.data, username=form.username.data,password=form.password.data)
+        writer.save_writer()
+        mail_message("Welcome to my personal blog","email/welcome_user",writer.email,writer=writer)
         return redirect(url_for('auth.login'))
-        title = "New Account"
-    return render_template('auth/register.html',registration_form = form)
+    return render_template('auth/signup.html',registration_form=form)

@@ -1,0 +1,3 @@
+Hello {{writer.username}}
+Welcome to my personal blog.
+We have just seen you have signed up for our application and want to welcome you to the family. You can post a blog, delete or update.
