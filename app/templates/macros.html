@@ -1,11 +1,22 @@
-{% macro displayBlog(blogs) %} {% for post in blogs %}
+{% macro displayBlog(blogs) %}
+{% for post in blogs %}
 
 <div class="container rr">
-    <a><h3 class='title'>{{post.title}}</h3></a>
+    <a>
+        <h3 class='title'>{{post.title}}</h3>
+    </a>
     <!-- <p class="name">Author: Aggy</p> -->
     <p>{{post.content}}</p>
     <!-- <img src="{{post.image}}" alt=""> -->
+    <!-- <a href="/blogs/{{post.id}}" class='post'>View comments</a><br>
+    <a href="/new/comment/{{post.id}}" class="btn btn-primary">Add comment</a> -->
+    <div><span class="foot">{{post.comments.count()}} Comments</span>
+        <a href="{{url_for('main.comment',blog_id = post.id)}}" class="btn btn-info btn-sm">Comment</a>
+        <!-- <a href="/delete/{{post.id}}" class="btn btn-primary">Delete post</a> -->
+        <a href="{{url_for('main.delete',id = post.id)}}" class="btn btn-info btn-sm">delete</a>
+    </div>
 
 </div>
 
-{%endfor%} {%endmacro%}
+{%endfor%}
+{%endmacro%}

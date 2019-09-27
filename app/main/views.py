@@ -2,16 +2,15 @@ from flask import render_template,request,redirect,url_for,abort
 from . import main
 from app.requests import get_quotes
 from flask_login import login_user,login_required,current_user
-from ..models import Writer,Blog,Quotes,Article
+from ..models import Writer,Blog,Quotes,Comment
 from .. import db
 import requests
 from .. requests import get_quotes
-from .forms import BlogForm
+from .forms import BlogForm,CommentForm
 
 @main.route('/')
 def index():
 
-    
     blogs = Blog.query.all()
     quotes = get_quotes()
     return render_template('index.html', blogs = blogs,quotes = quotes)
@@ -41,3 +40,32 @@ def new_blog():
 
         return redirect(url_for('main.index'))
     return render_template('create_blog.html',form=form)
+
+@main.route('/comment/<int:blog_id>', methods=['GET','POST'])
+def comment(blog_id):
+
+    form = CommentForm()
+    blogs = Blog.query.get(blog_id)
+    comments = Comment.query.filter_by(blog_id=blog_id).all()
+
+    if form.validate_on_submit():
+        comment = form.comment.data
+        blog_id = blog_id
+        # Writer_id = Writer_id
+        writer_id = current_user._get_current_object().id
+        new_comment = Comment(comment = comment,blog_id = blog_id,writer_id = writer_id)
+        new_comment.save_comments()
+        
+        return redirect(url_for('.comment',blog_id = blog_id))
+    return render_template('comment.html',form = form,blogs = blogs,comments = comments)
+
+@main.route('/index/<int:id>/delete', methods = ['GET','POST'])
+@login_required
+def delete(id):
+    current_post = Blog.query.filter_by(id = id).first()
+    print(current_post)
+    if current_post.writer != current_user:
+        abort(404)
+    db.session.delete(current_post)
+    db.session.commit()
+    return redirect(url_for('.index'))
