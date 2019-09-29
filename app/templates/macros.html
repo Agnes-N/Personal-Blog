@@ -2,15 +2,15 @@
 {% for post in blogs %}
 
 <div class="container rr">
-    <a>
+    <a href="https://www.investopedia.com/terms/b/business.asp" style="color:black">
         <h3 class='title'>{{post.title}}</h3>
     </a>
     <p>{{post.content}}</p>
-    <!-- <img src="{{post.image}}" alt=""> -->
+    <img src="{{post.image}}" width="300" height="200">
     <div><span class="foot">{{post.comments.count()}}</span>
+
         <a href="{{url_for('main.comment',blog_id = post.id)}}" > <i class="far fa-comment"></i></a>
-        
-        <!-- delete post -->
+
         <a href="{{url_for('main.update_blog',id = post.id)}}"><i class="fas fa-edit"></i></a>
         <a href="{{url_for('main.delete',id = post.id)}}"><i class="fa fa-trash"></i></a>
     </div>
@@ -19,16 +19,3 @@
 
 {%endfor%}
 {%endmacro%}
-
-{% macro displayComments(comments) %} {% for comment in comments %}
-
-<div class="container">
-    <h3 class="name">{{comment.username}}</h3>
-
-    <p>{{comment.content}}</p>
-    <!-- <a href="/delete/comment/{{comment.id}}" class="=btn btn-primary">Delete Comment</a> -->
-</div>
-
-
-
-{%endfor%} {%endmacro%}

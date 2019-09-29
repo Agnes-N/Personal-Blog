@@ -78,7 +78,6 @@ class Blog(db.Model):
         return f'Blog {self.content}'
 
 
-
 class Comment(db.Model):
     '''
     Comment class to define comment objects
@@ -119,3 +118,12 @@ class Quotes:
 
         self.author = author
         self.quote = quote
+
+class Subscription(db.Model):
+    __tablename__ = "subscribers"
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(255), unique=True, index=True)
+    email = db.Column(db.String(255), unique = True, index = True)
+
+    def __repr__(self):
+        return f'Subscription{self.name}'

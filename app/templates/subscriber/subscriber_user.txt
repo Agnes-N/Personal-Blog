@@ -1,0 +1,3 @@
+Hello {{subscriber.name}}
+Welcome to my personal blog.
+I have just seen that you have subscribed to receive blog notification. Enjoy all blogs!

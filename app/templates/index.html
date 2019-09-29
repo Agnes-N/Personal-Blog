@@ -1,11 +1,12 @@
+<div class="example" style="background-color:whitesmoke; padding: 2%">
+                <h1 class="container card-title text-center" style="font-family: 'Ultra', serif">WELCOME TO MY BLOG</h1>
+        </div>
 {% extends 'base.html' %}
 {% import 'macros.html' as macro %}
+{% import 'bootstrap/wtf.html' as wtf%}
 
 {% block content %}
-<div class="example" style="background-color:whitesmoke; padding: 2%">
-        <h3 class="container card-text">The great thing about one focus for a blog is that you’re
-                likely passionate about it and that will give you an edge when it comes to keeping up with the blog.</h3>
-</div>
+
 
 <div class="container" id="particles-js" style="margin-top:3%">
 
@@ -19,22 +20,26 @@
                 </div>
 
                 <div class="col-md-6">
-                        <img src="https://www.start-business-online.com/images/article_manager_uploads/blog.jpg" width="300"
-                                height="200">
-                                <h6 class="text" style="margin-left:6%"><small>Read to create a blog?<a href="{{url_for('auth.login')}}""><strong>Sign in</strong></small></h6>
+                        <img src="https://www.start-business-online.com/images/article_manager_uploads/blog.jpg" width="300"height="200">
+                {% if current_user.is_authenticated %}
+                <h6 class="text" style="margin-left:6%"><small>Read to create a blog?<a href="{{url_for('auth.logout')}}"><strong>Log Out</strong></a></small></h6>
+                {% else %}
+                <h6 class="text" style="margin-left:6%"><small>Read to create a blog?<a href="{{url_for('auth.login')}}"><strong>Sign in</strong></a></small></h6>
+                {%endif%}                                   
                 </div>
         </div>
 
-        <ul class="nav nav-pills nav-justified nav-fill" role="tablist">
-                <li class="nav-item">
-                        <a id="cats" class="nav-link" data-toggle="tab" href="#all" style="color: black"><strong></strong></a><br>
-                </li>
-
-        </ul>
         <div class="tab-content">
                 <div class="container tab-pane active" id="all"> <br>
                         {{macro.displayBlog(blogs)}} </div>
 
+        </div>
+
+        <div class="subscribe text-center" style="margin-top:4%">
+                <div class="col-md-6">
+                        <h3>subscribe here!</h3>
+                        {{wtf.quick_form(form)}}
+                </div>
         </div>
 </div>
 

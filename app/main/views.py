@@ -1,19 +1,33 @@
-from flask import render_template,request,redirect,url_for,abort
+from flask import render_template,request,redirect,flash,url_for,abort
 from . import main
 from app.requests import get_quotes
 from flask_login import login_user,login_required,current_user
-from ..models import Writer,Blog,Quotes,Comment
+from ..models import Writer,Blog,Quotes,Comment,Subscription
 from .. import db
 import requests
 from .. requests import get_quotes
-from .forms import BlogForm,CommentForm,UpdateBlogForm
+from .forms import BlogForm,CommentForm,UpdateBlogForm,SubscriptionForm
+from ..subscriber import mail_message
 
-@main.route('/')
+@main.route('/', methods=['GET','POST'])
 def index():
 
     blogs = Blog.query.all()
     quotes = get_quotes()
-    return render_template('index.html', blogs = blogs,quotes = quotes)
+
+    form = SubscriptionForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+
+        subscriber = Subscription(name = name, email = email)
+        db.session.add(subscriber)
+        db.session.commit()
+        
+        return redirect(url_for('main.index'))
+        mail_message("Welcome to my personal blog","subscriber/subscriber_user",subscriber.email,subscriber = subscriber)
+
+    return render_template('index.html', blogs = blogs,quotes = quotes, form = form)
 
 @main.route('/about')
 def about():
