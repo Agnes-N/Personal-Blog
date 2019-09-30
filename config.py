@@ -29,7 +29,7 @@ class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://wecode:123@localhost/personal_blog'
 
 class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://wecode:123@localhost/personal_blog'
+    SQLALCHEMY_TRACK_MODIFICATIONS=True
     DEBUG = True
 
 config_options = {
