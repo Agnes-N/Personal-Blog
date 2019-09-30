@@ -5,6 +5,7 @@ from flask_script import Manager,Server
 from app.models import Writer
 
 # Creating app instance
+# app = create_app('development')
 app = create_app('development')
 
 manager = Manager(app)
@@ -14,15 +15,16 @@ manager.add_command('db',MigrateCommand)
 manager.add_command('server',Server)
 manager.add_command('run',Server(use_debugger=True))
 
-@manager.shell
-def make_shell_context():
-    return dict(app=app,db=db,Writer=Writer)
-
 @manager.command
 def test():
     import unittest
     tests =unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
+
+
+@manager.shell
+def make_shell_context():
+    return dict(app=app,db=db,Writer=Writer)
 
 if __name__ == '__main__':
     manager.run()
