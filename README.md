@@ -1,23 +1,26 @@
 # Personal Blog
 
-This is an application that allows a user to create a pitch depending on a certain category and add pitch content.
+This is a plaftform where you can create and share your opinions and other users can read and comment on them.
 
 ## Author
 
-Agnes Nyiramisigaro, 22 SEPT 2019
+Agnes Nyiramisigaro, 1 Oct 2019
 
 ## Description
 
-This is an application that allows a user to create a pitch depending on a certain category and add pitch content. A user can also be able to comment and vote on another user's pitches.
+This is a plaftform where you can create and share your opinions and other users can read and comment on them.
 
 ## Behavior Driven Development
 
 This website will:
 
-1. Display the pitches that have been posted.
-2. Allow user to pitch an idea.
-3. Allow user to review pitches that have been posted.
-4. Allow user to select a category
+1. Display the blogs that have been posted.
+2. Allow writer to create a blog.
+3. Allow writer sign into the blog.
+4. Allow writer to delete insulting or degrading comment.
+5. Allow writer to update or delete a blog she/he created.
+6. Allow user to comment on blog.
+7. Allow user to receive alert email when new blog post by joing subscription.
 
 ## Dependencies
 
@@ -62,5 +65,3 @@ For any issues or questions, ideas or concern, please contact me on my e-mail: a
 MIT license
 
 Copyright (c) 2019 Moringa School
-
-Created with all the love in the world, enjoy it is free of charge.
