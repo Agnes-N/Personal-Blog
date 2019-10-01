@@ -1,6 +1,10 @@
- <ul class="nav flex-column" style="margin-top:3%; margin-left:5%">
+<ul class="nav flex-column" style="margin-top:3%; margin-left:5%">
     <li class="nav-item">
         <a class="nav-link" href="{{url_for('main.index')}}" style="color: black">HOME</a>
+    </li>
+
+    <li class="nav-item">
+            <a class="nav-link" href="{{url_for('main.profile',name = current_user.username)}}" style="color: black">PROFILE</a>
     </li>
 
     {% if current_user.is_authenticated %}
@@ -8,5 +12,6 @@
             <a class="nav-link" href="{{url_for('main.new_blog')}}" style="color: black"><strong>CREATE A BLOG</strong></a>
         </li>
     {% endif %}  
+
 </ul>
 

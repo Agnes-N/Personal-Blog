@@ -5,6 +5,8 @@ class Config:
     SQLALCHEMY_TRECK_MODIFICATIONS = True
 
     QUOTES_URL = 'http://quotes.stormconsultancy.co.uk/random.json'
+    
+    UPLOADED_PHOTOS_DEST='app/static/photos'
 
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://wecode:123@localhost/personal_blog'

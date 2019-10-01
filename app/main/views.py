@@ -3,10 +3,10 @@ from . import main
 from app.requests import get_quotes
 from flask_login import login_user,login_required,current_user
 from ..models import Writer,Blog,Quotes,Comment,Subscription
-from .. import db
+from .. import db,photos
 import requests
 from .. requests import get_quotes
-from .forms import BlogForm,CommentForm,UpdateBlogForm,SubscriptionForm
+from .forms import BlogForm,CommentForm,UpdateBlogForm,SubscriptionForm,UpdateProfile
 from ..subscriber import mail_message
 
 @main.route('/', methods=['GET','POST'])
@@ -28,13 +28,6 @@ def index():
         mail_message("Welcome to my personal blog","subscriber/subscriber_user",subscriber.email,subscriber = subscriber)
 
     return render_template('index.html', blogs = blogs,quotes = quotes, form = form)
-
-@main.route('/about')
-def about():
-
-    title = 'Welcome to my personal blog'
-
-    return render_template('about.html', title = title)
 
 @main.route('/create_new',methods=['GET','POST'])
 @login_required
@@ -119,3 +112,44 @@ def update_blog(id):
 
         return redirect(url_for('main.index'))
     return render_template('update_blog.html',form = form)
+
+@main.route('/writer/<name>')
+def profile(name):
+
+    writer = Writer.query.filter_by(username = name).first()
+    writer_id = current_user._get_current_object().id
+    blogs = Blog.query.filter_by(writer_id = writer_id).all()
+    if writer is None:
+        abort(404)
+    return render_template("profile/profile.html",writer = writer,blogs = blogs)
+
+@main.route('/blogs/<name>/updateprofile',methods=['GET','POST'])
+@login_required
+def updateprofile(name):
+    
+    writer = Writer.query.filter_by(username = name).first()
+   
+    if Writer == None:
+        abort(404)
+    form = UpdateProfile()
+    if form.validate_on_submit():
+        Writer.bio = form.bio.data
+        db.session.add(writer)
+        db.session.commit()
+
+        return redirect(url_for('.profile',name = writer.username))
+    return render_template('profile/update.html',form = form)
+
+
+@main.route('/writer/<name>/update/pic',methods=['POST'])
+@login_required
+def update_pic(name):
+    
+    writer = Writer.query.filter_by(username = name).first()
+   
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path=f'photos/{filename}'
+        writer.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',name = name))

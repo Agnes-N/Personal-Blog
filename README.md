@@ -1,4 +1,4 @@
-# One minute pitch
+# Personal Blog
 
 This is an application that allows a user to create a pitch depending on a certain category and add pitch content.
 

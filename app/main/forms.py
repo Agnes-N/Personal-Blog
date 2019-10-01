@@ -4,6 +4,10 @@ from wtforms.validators import Required, Email
 from wtforms import ValidationError
 from ..models import Subscription
 
+class UpdateProfile(FlaskForm):
+    bio=TextAreaField('write a brief bio about you.', validators=[Required()])
+    submit=SubmitField('save')
+
 class BlogForm(FlaskForm):
     title = StringField('Title',validators = [Required()])
     content = TextAreaField('Content',validators = [Required()])
