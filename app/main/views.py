@@ -58,9 +58,7 @@ def comment(blog_id):
     if form.validate_on_submit():
         comment = form.comment.data
         blog_id = blog_id
-        # Writer_id = Writer_id
-        writer_id = current_user._get_current_object().id
-        new_comment = Comment(comment = comment,blog_id = blog_id,writer_id = writer_id)
+        new_comment = Comment(comment = comment,blog_id = blog_id)
         new_comment.save_comments()
         
         return redirect(url_for('.comment',blog_id = blog_id))
